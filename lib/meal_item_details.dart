@@ -218,7 +218,7 @@ class MealDetail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Hero Image Section
+            
             Hero(
               tag: meal.id,
               child: Container(
@@ -258,7 +258,7 @@ class MealDetail extends StatelessWidget {
               ),
             ),
 
-            // Title and Info Section
+            
             Transform.translate(
               offset: const Offset(0, -30),
               child: Container(
@@ -285,7 +285,7 @@ class MealDetail extends StatelessWidget {
                       ),
                     ),
 
-                    // Info Chips
+                    
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Wrap(
@@ -327,7 +327,7 @@ class MealDetail extends StatelessWidget {
                         .toList(),
                     const SizedBox(height: 32),
 
-                    // Steps Section
+                    
                     _buildSectionHeader(
                       context,
                       'Instructions',

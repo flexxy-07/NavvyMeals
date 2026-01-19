@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tastynav_cuisines/categories_screen.dart';
 import 'package:tastynav_cuisines/category_meals_screen.dart';
 import 'package:tastynav_cuisines/meal_item_details.dart';
+import 'package:tastynav_cuisines/tabs_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,8 +38,10 @@ class MyApp extends StatelessWidget{
         ),
         useMaterial3: true,
       ),
-      home: CategoriesScreen(),
+     // home: CategoriesScreen(),
+      initialRoute: '/',
       routes: {
+        '/' : (context) => TabsScreen(),
         CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
         MealDetail.routeName: (ctx) => MealDetail(),
       }, // first screen of the app
