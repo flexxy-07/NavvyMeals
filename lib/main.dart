@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:tastynav_cuisines/categories_screen.dart';
 import 'package:tastynav_cuisines/category_meals_screen.dart';
+import 'package:tastynav_cuisines/meal_item_details.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,8 +39,17 @@ class MyApp extends StatelessWidget{
       ),
       home: CategoriesScreen(),
       routes: {
-        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen()
+        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
+        MealDetail.routeName: (ctx) => MealDetail(),
       }, // first screen of the app
+      
+      // used when a router is not defined in routes table, then this will be called
+      onGenerateRoute: (settings){
+        return MaterialPageRoute(builder: (ctx) => CategoriesScreen());  
+      },
+      onUnknownRoute: (settings) => MaterialPageRoute(
+        builder: (ctx) => CategoriesScreen(),
+      ),
     );
   }
 }
