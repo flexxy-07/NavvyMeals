@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:tastynav_cuisines/categories_screen.dart';
 import 'package:tastynav_cuisines/category_meals_screen.dart';
+import 'package:tastynav_cuisines/favourite_screen.dart';
+import 'package:tastynav_cuisines/filters_screen.dart';
 import 'package:tastynav_cuisines/meal_item_details.dart';
 import 'package:tastynav_cuisines/tabs_screen.dart';
 
@@ -44,6 +46,8 @@ class MyApp extends StatelessWidget{
         '/' : (context) => TabsScreen(),
         CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
         MealDetail.routeName: (ctx) => MealDetail(),
+        FavouriteScreen.routeName: (ctx) => FavouriteScreen(),
+        FiltersScreen.routeName : (ctx) => FiltersScreen()
       }, // first screen of the app
       
       // used when a router is not defined in routes table, then this will be called

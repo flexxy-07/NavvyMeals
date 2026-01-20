@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:tastynav_cuisines/dummy_data.dart';
 import 'package:tastynav_cuisines/model/meal.dart';
 
-class MealDetail extends StatelessWidget {
+class MealDetail extends StatefulWidget {
   const MealDetail({super.key});
   static const routeName = '/meal-details';
+
+  @override
+  State<MealDetail> createState() => _MealDetailState();
+}
+
+class _MealDetailState extends State<MealDetail> {
 
   Widget _buildSectionHeader(BuildContext context, String title, IconData icon) {
     return Padding(
@@ -180,11 +186,64 @@ class MealDetail extends StatelessWidget {
     );
   }
 
+  Widget _buildFavoriteButton(BuildContext context, Meal meal) {
+    final Color primary = Theme.of(context).colorScheme.primary;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          setState(() {
+            meal.isFavourite = !meal.isFavourite;
+          });
+        },
+        child: Ink(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.grey.shade200, width: 1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                meal.isFavourite
+                    ? Icons.favorite_rounded
+                    : Icons.favorite_border_rounded,
+                color: meal.isFavourite ? Colors.redAccent : primary,
+                size: 22,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                meal.isFavourite ? 'Added' : 'Add to Favorites',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF2D3436),
+                  letterSpacing: 0.2,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final routeArgs =
-        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-    final mealId = routeArgs['id'];
+      ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final mealId = routeArgs['id']!;
     final Meal meal = DUMMY_MEALS.firstWhere((meal) => meal.id == mealId);
 
     return Scaffold(
@@ -275,13 +334,25 @@ class MealDetail extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-                      child: Text(
-                        meal.title,
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: const Color(0xFF2D3436),
-                              letterSpacing: 0.5,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              meal.title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color(0xFF2D3436),
+                                    letterSpacing: 0.5,
+                                  ),
                             ),
+                          ),
+                          const SizedBox(width: 12),
+                          _buildFavoriteButton(context, meal),
+                        ],
                       ),
                     ),
 
@@ -347,6 +418,10 @@ class MealDetail extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.of(context).pop(mealId);
+      },
+      child: Icon(Icons.delete),),
     );
   }
 }

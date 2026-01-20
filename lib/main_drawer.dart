@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tastynav_cuisines/favourite_screen.dart';
+import 'package:tastynav_cuisines/filters_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
 
-  Widget buildListTile(String title, IconData icon) {
+  Widget buildListTile(String title, IconData icon, VoidCallback handler) {
     return ListTile(
       leading: Icon(icon, size: 26),
       title: Text(
@@ -14,12 +16,12 @@ class MainDrawer extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onTap: () => (),
+      onTap: handler,
     );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,) {
     return Drawer(
       child: Column(
         children: [
@@ -39,8 +41,12 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          buildListTile('Meal', Icons.restaurant),
-          buildListTile('Filter', Icons.settings),
+          buildListTile('Meal', Icons.restaurant, (){
+            Navigator.of(context).pushReplacementNamed('/');
+          }),
+          buildListTile('Filter', Icons.settings, (){
+            Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName, arguments: {'id' : ''});
+          })
         ],
       ),
     );

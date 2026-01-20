@@ -9,12 +9,12 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  final List<Map<String, Object>> _pages = [
-    {'page' : CategoriesScreen(), 'title' : 'Categories'},
-    {'page' : FavouriteScreen(), 'title' : 'Your Favourites'}
-  ];
-
   int _selectedPageIndex = 0;
+
+  List<Map<String, Object>> get _pages => [
+        {'page': CategoriesScreen(), 'title': 'Categories'},
+        {'page': FavouriteScreen(), 'title': 'Your Favourites'},
+      ];
     
   void _selectPage(int index){
     setState(() {
