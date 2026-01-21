@@ -3,6 +3,10 @@ import 'package:tastynav_cuisines/main_drawer.dart';
 
 class FiltersScreen extends StatefulWidget {
   static const String routeName = '/filter-meals';
+  final Function saveFilters;
+  final Map<String, bool> currentFilters;
+
+  FiltersScreen(this.saveFilters, this.currentFilters);
 
   @override
   _FiltersScreenScreenState createState() => _FiltersScreenScreenState();
@@ -14,6 +18,14 @@ class _FiltersScreenScreenState extends State<FiltersScreen> {
   var _vegan = false;
   var _lactoseFree = false;
 
+  @override
+  void initState(){
+    super.initState();
+    _glutenFree = widget.currentFilters['gluten']!;
+    _lactoseFree = widget.currentFilters['lactose']!; 
+    _vegan = widget.currentFilters['vegan']!;
+    _vegetarian = widget.currentFilters['vegetarian']!;
+  }
   Widget buildSwitchListTileView(
     String title,
     String subTitle,
@@ -31,7 +43,20 @@ class _FiltersScreenScreenState extends State<FiltersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Your Filters')),
+      appBar: AppBar(title: const Text('Your Filters'),
+      actions: [IconButton(
+        icon: const Icon(Icons.save),
+        onPressed:(){
+          final selectedFilters = {
+            'gluten' : _glutenFree,
+            'lactose' : _lactoseFree,
+            'vegan' : _vegan,
+            'vegetarian' : _vegetarian
+          };
+          widget.saveFilters(selectedFilters);
+        },
+      )],),
+      
       drawer: MainDrawer(),
       body: Column(
         children: <Widget>[

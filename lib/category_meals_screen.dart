@@ -5,6 +5,9 @@ import 'package:tastynav_cuisines/model/meal.dart';
 
 class CategoryMealsScreen extends StatefulWidget {
   static const routeName = '/category-meals';
+  final List<Meal> _availableMeals;
+
+  CategoryMealsScreen(this._availableMeals);
 
   @override
   _CategoryMealsScreenState createState() => _CategoryMealsScreenState();
@@ -23,7 +26,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
       if (routeArgs != null) {
         title = routeArgs['title']!;
         final categoryId = routeArgs['id'];
-        filteredMeals = DUMMY_MEALS.where((meal) {
+        filteredMeals = widget._availableMeals.where((meal) {
           return meal.categories.contains(categoryId);
         }).toList();
       }
